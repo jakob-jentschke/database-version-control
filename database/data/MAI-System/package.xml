@@ -1,0 +1,138 @@
+<package>
+    <table name="mai_cms_languages" auto_increment="id_lang">
+        <option type="select" name="lang" default="0">language</option>
+    </table>
+    <table name="mai_cms_devices" auto_increment="id_dev">
+        <option type="select" name="dev" default="1">device</option>
+    </table>
+    <table name="mai_cms_articles" no_data="true"/>
+    <table name="mai_cms_articles2array_details" no_data="true"/>
+    <table name="mai_cms_articles2details" no_data="true"/>
+    <table name="mai_cms_articles_id" no_data="true"/>
+    <table name="mai_cms_clients" no_data="true"/>
+    <table name="mai_cms_configuration" no_data="true"/>
+    <table name="mai_cms_configuration2devices" no_data="true"/>
+    <table name="mai_cms_configuration2languages" no_data="true"/>
+    <table name="mai_cms_countries" auto_increment="id_country"/>
+    <table name="mai_cms_device_detection" auto_increment="id_dd"/>
+    <table name="mai_cms_domains" no_data="true"/>
+    <table name="mai_cms_domains_id" no_data="true"/>
+    <table name="mai_cms_domains_protocol" auto_increment="id_protocol"/>
+    <table name="mai_cms_extensions" no_data="true"/>
+    <table name="mai_cms_format_date" auto_increment="id_fd"/>
+    <table name="mai_cms_format_decimal" auto_increment="id_fdc"/>
+    <table name="mai_cms_format_images" no_data="true"/>
+    <table name="mai_cms_format_thousand" auto_increment="id_fth"/>
+    <table name="mai_cms_format_time" auto_increment="id_ft"/>
+    <table name="mai_cms_syspages" auto_increment="id_sp">
+        <condition>id_xt = '0'</condition>
+    </table>
+    <table name="mai_cms_grids_default" auto_increment="id_grid_d">
+        <condition>id_xt = '0'</condition>
+    </table>
+    <table name="mai_cms_grids" no_data="true"/>
+    <table name="mai_cms_grids_cols_default" auto_increment="id_col_d">
+        <query>
+            SELECT `mai_cms_grids_cols_default`.* FROM `mai_cms_grids_cols_default`
+            LEFT JOIN `mai_cms_grids_default`
+            ON `mai_cms_grids_cols_default`.`id_grid_d` = `mai_cms_grids_default`.`id_grid_d`
+            WHERE `mai_cms_grids_default`.`id_xt` = '0'
+        </query>
+        <reference table="mai_cms_grids_default">id_grid_d</reference>
+    </table>
+    <table name="mai_cms_grids_cols" no_data="true"/>
+    <table name="mai_cms_functions"  auto_increment="id_f"/>
+    <table name="mai_cms_syspages2functions2files" auto_increment="id_sp2f2f">
+        <query>
+            SELECT `mai_cms_syspages2functions2files`.* FROM `mai_cms_syspages2functions2files`
+            LEFT JOIN `mai_cms_syspages`
+            ON `mai_cms_syspages2functions2files`.`id_sp` = `mai_cms_syspages`.`id_sp`
+            WHERE `mai_cms_syspages`.`id_xt` = '0'
+        </query>
+        <reference table="mai_cms_syspages">id_sp</reference>
+        <reference table="mai_cms_functions">id_f</reference>
+        <reference table="mai_cms_grids_default">id_grid_d</reference>
+    </table>
+    <table name="mai_cms_tables" auto_increment="id_t"/>
+    <table name="mai_cms_forms" auto_increment="id_fo">
+        <condition>`id_xt` = '0'</condition>
+        <reference table="mai_cms_syspages">id_sp</reference>
+    </table>
+    <table name="mai_cms_formsfieldsets" auto_increment="id_fs">
+        <query>
+            SELECT `mai_cms_formsfieldsets`.* FROM `mai_cms_formsfieldsets`
+            LEFT JOIN `mai_cms_forms`
+            ON `mai_cms_formsfieldsets`.`id_fo` = `mai_cms_forms`.`id_fo`
+            WHERE `mai_cms_forms`.`id_xt` = '0'
+        </query>
+        <reference table="mai_cms_forms">id_fo</reference>
+    </table>
+    <table name="mai_cms_formsfields" auto_increment="id_ff">
+        <query>
+            SELECT `mai_cms_formsfields`.* FROM `mai_cms_formsfields`
+            LEFT JOIN `mai_cms_formsfieldsets`
+            ON `mai_cms_formsfieldsets`.`id_fs` = `mai_cms_formsfields`.`id_fs`
+            LEFT JOIN `mai_cms_forms`
+            ON `mai_cms_formsfieldsets`.`id_fo` = `mai_cms_forms`.`id_fo`
+            WHERE `mai_cms_forms`.`id_xt` = '0'
+        </query>
+        <reference table="mai_cms_formsfieldsets">id_fs</reference>
+        <reference table="mai_cms_tables">id_t</reference>
+    </table>
+    <table name="mai_cms_forms_help" auto_increment="id_fh">
+        <query>
+            SELECT `mai_cms_forms_help`.* FROM `mai_cms_forms_help`
+            LEFT JOIN `mai_cms_formsfields`
+            ON `mai_cms_forms_help`.`id_ff` = `mai_cms_formsfields`.`id_ff`
+            LEFT JOIN `mai_cms_formsfieldsets`
+            ON `mai_cms_formsfieldsets`.`id_fs` = `mai_cms_formsfields`.`id_fs`
+            LEFT JOIN `mai_cms_forms`
+            ON `mai_cms_formsfieldsets`.`id_fo` = `mai_cms_forms`.`id_fo`
+            WHERE `mai_cms_forms`.`id_xt` = '0'
+        </query>
+        <reference table="mai_cms_formsfields">id_ff</reference>
+        <reference table="mai_cms_languages">id_lang</reference>
+    </table>
+    <table name="mai_cms_genders" auto_increment="id_gender"/>
+    <table name="mai_cms_image_programms" auto_increment="id_ip"/>
+    <table name="mai_cms_listnumbers" auto_increment="id_ln"/>
+    <table name="mai_cms_logins" no_data="true"/>
+    <table name="mai_cms_logins_errors" no_data="true"/>
+    <table name="mai_cms_media" no_data="true"/>
+    <table name="mai_cms_media_id" no_data="true"/>
+    <table name="mai_cms_media_inuse" no_data="true"/>
+    <table name="mai_cms_media_path" no_data="true"/>
+    <table name="mai_cms_media_path_id" no_data="true"/>
+    <table name="mai_cms_modules" no_data="true"/>
+    <table name="mai_cms_modules_id" no_data="true"/>
+    <table name="mai_cms_pages" no_data="true"/>
+    <table name="mai_cms_pages2articles" no_data="true"/>
+    <table name="mai_cms_pages2articles_id" no_data="true"/>
+    <table name="mai_cms_pages_id" no_data="true"/>
+    <table name="mai_cms_pages_website" no_data="true"/>
+    <table name="mai_cms_placeholders" no_data="true"/>
+    <table name="mai_cms_sites" no_data="true"/>
+    <table name="mai_cms_sites2devices" no_data="true"/>
+    <table name="mai_cms_sites2domains" no_data="true"/>
+    <table name="mai_cms_sites2languages" no_data="true"/>
+    <table name="mai_cms_sites2templates" no_data="true"/>
+    <table name="mai_cms_sites_id" no_data="true"/>
+    <table name="mai_cms_skins" auto_increment="id_skin"/>
+    <table name="mai_cms_templates" no_data="true"/>
+    <table name="mai_cms_templates_content" no_data="true"/>
+    <table name="mai_cms_templates_content_id" no_data="true"/>
+    <table name="mai_cms_templates_id" no_data="true"/>
+    <table name="mai_cms_templates_navigation" no_data="true"/>
+    <table name="mai_cms_templates_navigation_id" no_data="true"/>
+    <table name="mai_cms_templates_navigation_sub" no_data="true"/>
+    <table name="mai_cms_timezones" auto_increment="id_tz"/>
+    <table name="mai_cms_unlock" auto_increment="id_ut"/>
+    <table name="mai_cms_user" no_data="true"/>
+    <table name="mai_cms_user2devices" no_data="true"/>
+    <table name="mai_cms_user2languages" no_data="true"/>
+    <table name="mai_cms_user2sites" no_data="true"/>
+    <table name="mai_cms_usergroups" no_data="true"/>
+    <table name="mai_cms_usergroups2formsfields" no_data="true"/>
+    <table name="mai_cms_usergroups2userrights" no_data="true"/>
+    <table name="mai_cms_user_id" no_data="true"/>
+</package>

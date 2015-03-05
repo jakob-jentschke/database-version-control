@@ -1,0 +1,351 @@
+/* 
+    Document   : style
+    Created on : 01.07.2013, 10:01:04
+    Author     : Matias Thomsen
+    Description:
+        Purpose of the stylesheet follows.
+*/
+table {
+    border: 1px #dfdfdf solid;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+body {
+    font-size: 12pt;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    color: #000000;
+}
+
+#main {
+    width: 1400px;
+    min-height: 500px;
+    margin: 0 auto;
+}
+
+#header {
+    width: 1400px;
+    height: 45px;
+    float: left;
+    border-bottom: 4px #0033cc solid;
+    background-color: #000090;
+    border-radius: 7px 7px 0 0;
+    color:#ccdddd;
+    font-size: 1.5em;
+    line-height: 45px;
+    text-indent: 10px;
+}
+
+#menu {
+    width: 1380px;
+    margin: 0;
+    padding: 10px;
+    float: left;
+    border-top: 4px #0066ff solid;
+    border-bottom: 2px #0066ff solid;
+}
+
+#menu-title {
+    width: 1400px;
+    margin: 0;
+    float: left;
+    border-bottom: 2px #0066ff solid;
+    font-variant: small-caps;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#menu ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#menu ul .active {
+    border: 1px #0066ff solid;
+}
+
+#menu ul .active a{
+    color: #000000;
+}
+
+#menu ul li{
+    margin-right: 10px;
+    padding: 0;
+    border: 1px #000066 solid;
+    list-style: none;
+    /*display: inline;*/
+    float: left;
+    text-align: center;
+}
+
+#menu ul li a{
+    padding: 0 10px;
+    display: block;
+    text-decoration: none;
+    color: #000090;
+    font-weight: bold;
+    
+    background-color: #eeeeff;
+}
+
+#menu ul li a:hover{
+    color: #000000;
+    background-color: #ddddff;
+}
+
+#content {
+    width: 1380px;
+    min-height: 500px;
+    padding: 10px;
+    float: left;
+    font-size: 0.9em;
+}
+
+#content .content {
+    width: 100%;
+    margin-bottom: 25px;
+    float: left;
+    overflow-x: auto;
+}
+
+#content .content .content-title {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    font-weight: bold;
+    border-bottom: 2px #dfdfdf solid;
+}
+
+#content .content .content-table {
+    width: 1368px;
+    margin-top: 10px;
+    padding: 5px;
+    float: left;
+    border: 1px #dfdfdf solid;
+}
+
+#content .content .wrapper{
+    width: 400px;
+    margin: 10px;
+    float: left;
+}
+
+#content .content .wrapper .line {
+    width: 100%;
+    float: left;
+}
+
+#content .content .wrapper .line-title {
+    width: 100px;
+    float: left;
+    font-weight: bold;
+    text-align: right;
+}
+
+#content .content .wrapper .line-body {
+    width: 290;
+    margin-left: 10px;
+    float: left;
+}
+
+#content .content .wrapper .line:hover {
+    background-color: #dfdfdf;
+}
+
+#content .content .content-submenu {
+    width: 1378px;
+    padding: 3px 0;
+    float: left;
+}
+
+#content .content-submenu ul, #content .content-submenu ul li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#content .content-submenu ul li{
+    display: inline;
+    padding-right: 20px;
+}
+
+#content .content-submenu ul li a{
+    text-decoration: none;
+    color: #006600;
+    font-weight: bold;
+}
+
+#content .content-submenu ul li a:hover{
+    color: #0066ff;
+}
+
+#content .content-left {
+    width: 150px;
+    float: left;
+}
+
+#content .content-right {
+    min-height: 500px;
+    margin-left: 150px;
+    padding-left: 20px;
+    border-left: 2px #0066ff solid;
+}
+
+#footer {
+    width: 1400px;
+    height: 30px;
+    float: left;
+    border-top: 2px #0066ff solid;
+    background-color: #000090;
+    border-radius: 0 0 5px 5px;
+    color:#ccdddd;
+    line-height: 30px;
+    text-indent: 10px;
+}
+#footer a {
+    color: #ccffff;
+    text-decoration-line: line-through;
+}
+
+/* FORM */
+.form-table {
+    border: 1px #dfdfdf solid;
+}
+
+.form-table thead tr th {
+    border-bottom: 4px #bfbfbf solid;
+}
+
+.form-table tbody tr{
+    text-align: center;
+}
+
+.form-table tbody tr td{
+    text-align: center;
+    padding: 5px 1px;
+}
+
+.form-table tbody tr input{
+    border: 1px #bfbfbf solid;
+}
+
+.form-table tbody tr select{
+    border: 1px #bfbfbf solid;
+}
+
+.form-text-50 {
+    width: 50px;
+}
+
+.form-text-75 {
+    width: 75px;
+}
+
+.form-text-100 {
+    width: 100px;
+}
+
+.form-text-150 {
+    width: 150px;
+}
+
+.form-text-200 {
+    width: 200px;
+}
+
+.form-text-300 {
+    width: 300px;
+}
+
+.form-text-400 {
+    width: 400px;
+}
+
+.content-form {
+    
+}
+
+.content-form-wrapper {
+    margin-right: 10px;
+    float: left;
+}
+
+.content-form-wrapper-line {
+    width: 100%;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.content-form-wrapper label{
+    float: left;
+}
+
+.content-form-wrapper input{
+    float: left;
+    border: 1px #bfbfbf solid;
+}
+
+.content-form-wrapper select{
+    min-width: 75px;
+    float: left;
+    border: 1px #bfbfbf solid;
+}
+/* MESSENGER */
+
+.message-box {
+    width: 1378px;
+    margin: 10px 0;
+    float: left;
+}
+
+.message-error-box {
+    padding: 5px;
+    border: 1px #FF0000 solid;
+    border-radius: 3px;
+}
+
+.message-warning-box {
+    padding: 5px;
+    border: 1px #FFCC00 solid;
+    border-radius: 3px;
+}
+
+.message-success-box {
+    padding: 5px;
+    border: 1px #00bb00 solid;
+    border-radius: 3px;
+}
+
+
+.form-title {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+#messageBox {
+    margin-top: 50px;
+    height: 120px;
+    border: gray 1px solid;
+    overflow: scroll;
+}
+
+.msgOK {
+    color: #00AA00;
+}
+
+.msgNotice {
+    color: #0000AA;
+}
+
+.msgError {
+    color: #AA0000;
+}
