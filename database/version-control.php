@@ -79,7 +79,7 @@ function loadStructure($package, $connection) {
 	$stmt = $connection->prepare("SHOW TABLES LIKE '".$configDB['prefix'].$table['name']."'");
         $stmt->execute();
         if($stmt->rowCount() == 1) {
-	  $stmt = $connection->prepare('SHOW CREATE TABLE '.$configDB['prefix'].$table['name']);
+	  $stmt = $connection->prepare('SHOW CREATE TABLE `'.$configDB['prefix'].$table['name'].'`');
 	  $stmt->execute();
 	  $row = $stmt->fetch(PDO::FETCH_NUM);
 	  
@@ -444,8 +444,7 @@ if(isset($_POST['save'])) {
 if(isset($_POST['load']) && isset($_POST['package'])) {
     if(!is_dir('data/backup')) mkdir('data/backup');
     
-    $filename = "data/backup/backup_".date('d-m-y').".sql";
-    for($i = 1; file_exists($filename); $i++) $filename = $filename = "data/backup/backup_".date('d-m-y')."_".$i.".sql";
+    $filename = $filename = "data/backup/backup_".time().".sql";
     exec("mysqldump -u ".$configDB[0]['user']." -p'".$configDB[0]['password']."' --opt ".$configDB[0]['database']." > ".$filename);
     
     foreach($_POST['package'] as $package) {

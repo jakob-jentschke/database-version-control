@@ -36,8 +36,8 @@ function prepareTable(PDO $connection, $prefix, $table, $savedTable = NULL) {
         $usedIds = array();
         
         $topId = 1;
-        foreach($savedTable as $col) if(getColumnId($col) > $topId) $topId = getColumnId($col);
-        foreach($table as $col) if(getColumnId($col) > $topId) $topId = getColumnId($col);
+        foreach($savedTable['columns'] as $col) if(getColumnId($col) > $topId) $topId = getColumnId($col);
+        foreach($table['columns'] as $col) if(getColumnId($col) > $topId) $topId = getColumnId($col);
         
         foreach($table['columns'] as $column) {
             if(!getColumnId($column)) {
@@ -46,8 +46,9 @@ function prepareTable(PDO $connection, $prefix, $table, $savedTable = NULL) {
                 foreach($savedTable['columns'] as $savedColumn) {
                     if(getColumnName($savedColumn) == $name) {
                         $id = getColumnId($savedColumn);
+                        
                         if(in_array($id, $usedIds)) return false;
-                        $alterStatements[] = "MODIFY ".setColumnId($column, getColumnId($id));
+                        $alterStatements[] = "MODIFY ".setColumnId($column, $id);
                         $usedIds[] = $id;
                         continue 2;
                     }
@@ -85,11 +86,10 @@ function saveTableDefinition(PDO $connection, $prefix, $tableDefinition) {
             $id = getColumnId($column);
             if($dbColumn = getColumnById($dbTable, $id)) {
                 $modifiedIds[] = $id;
-                if($dbColumn != $column) $alterStatements[] = "CHANGE ".getColumnName($dbColumn)." ".$column;
+                if($dbColumn != $column) $alterStatements[] = "CHANGE `".getColumnName($dbColumn)."` ".$column;
             }
             else $alterStatements[] = "ADD ".$column;
         }
-        
         foreach($dbTable['columns'] as $column) {
             if(!in_array(getColumnId($column), $modifiedIds)) $alterStatements[] = "DROP ".getColumnName($column);
         }
@@ -99,7 +99,8 @@ function saveTableDefinition(PDO $connection, $prefix, $tableDefinition) {
         $droppedIndices = array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if(!in_array($row['Key_name'], $droppedIndices)) {
-                $alterStatements[] = "DROP INDEX ".$row['Key_name'];
+		if($row['Key_name'] == 'PRIMARY') $alterStatements[] = "DROP PRIMARY KEY";
+                else $alterStatements[] = "DROP INDEX ".$row['Key_name'];
                 $droppedIndices[] = $row['Key_name'];
             }
         }
@@ -108,7 +109,7 @@ function saveTableDefinition(PDO $connection, $prefix, $tableDefinition) {
         
         $alterStatements[] = $tableDefinition['options'];
         
-        $stmt = $connection->prepare("ALTER TABLE ".$prefix.$table['name']." ".implode(',', $alterStatements));
+        $stmt = $connection->prepare("ALTER TABLE ".$prefix.$tableDefinition['name']." ".implode(',', $alterStatements));
         $stmt->execute();
     }
     else {
@@ -136,7 +137,7 @@ function getColumnComment($columnDefinition) {
 }
 
 function getColumnId($columnDefinition) {
-    if(preg_match("/::(\d+)::/", getColumnComment($column), $matchId)) return $matchId[1];
+    if(preg_match("/::(\d+)::/", getColumnComment($columnDefinition), $matchId)) return $matchId[1];
     else return false;
 }
 
