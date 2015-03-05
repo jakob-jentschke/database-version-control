@@ -20,8 +20,8 @@ function getTableDefinition($createStatement, $prefix) {
     $table['keys'] = array();
     
     foreach(explode(',', $match[2]) as $column) {
-        if(preg_match('/^\s*`(.*?)`\s*(.*)\s*$/is', $column))  $table['columns'][] = $column;
-        else $table['keys'][] = $column;
+        if(preg_match('/^\s*`(.*?)`\s*(.*)\s*$/is', $column))  $table['columns'][] = trim($column);
+        else $table['keys'][] = trim($column);
     }
     
     $table['options'] = $match[3];
@@ -146,9 +146,9 @@ function setColumnComment($columnDefinition, $comment) {
 }
 
 function setColumnId($columnDefinition, $id) {
-    $comment = getColumnComment($column);
-    if(preg_match("/::(\d+)::/", $comment, $matchId)) return setColumnComment(preg_replace("/::(\d+)::/", "::".$id."::", $comment));
-    else return setColumnComment("::".$id."::".$comment);
+    $comment = getColumnComment($columnDefinition);
+    if(preg_match("/::(\d+)::/", $comment, $matchId)) return setColumnComment($columnDefinition, preg_replace("/::(\d+)::/", "::".$id."::", $comment));
+    else return setColumnComment($columnDefinition, "::".$id."::".$comment);
 }
 
 

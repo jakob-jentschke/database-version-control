@@ -26,7 +26,7 @@ function saveStructure($package, PDO $connection) {
     foreach($xml->table as $table) {
         $tableName = (string) $table['name'];
         
-        $stmt = $connection->prepare('SHOW CREATE TABLE '.$configDB['prefix'].$tableName);
+        $stmt = $connection->prepare('SHOW CREATE TABLE `'.$configDB['prefix'].$tableName.'`');
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_NUM);
         
