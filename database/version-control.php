@@ -57,6 +57,8 @@ function saveStructure($package, PDO $connection) {
 
 
 function loadStructure($package, $connection) {
+    global $configDB;
+    
     $xml = simplexml_load_file('data/'.$package.'/package.xml');
     
     if(isset($xml->package)) {
@@ -74,11 +76,15 @@ function loadStructure($package, $connection) {
     $structure = json_decode(file_get_contents('data/'.$package.'/structure.json'), true);
 
     foreach($structure as $table) {
-        $stmt = $connection->prepare('SHOW CREATE TABLE '.$configDB['prefix'].$table['name']);
+	$stmt = $connection->prepare("SHOW TABLES LIKE '".$configDB['prefix'].$table['name']."'");
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_NUM);
-        
-        prepareTable($connection, $configDB['prefix'], getTableDefinition($row[1], $configDB['prefix']), $table);
+        if($stmt->rowCount() == 1) {
+	  $stmt = $connection->prepare('SHOW CREATE TABLE '.$configDB['prefix'].$table['name']);
+	  $stmt->execute();
+	  $row = $stmt->fetch(PDO::FETCH_NUM);
+	  
+	  prepareTable($connection, $configDB['prefix'], getTableDefinition($row[1], $configDB['prefix']), $table);
+        }
         
         saveTableDefinition($connection, $configDB['prefix'], $table);
 
