@@ -1,0 +1,1 @@
+{"groups":{"auto_increment":"id","1":{"name":"admin","description":"Administrator"},"2":{"name":"red","description":"Redakteur"}},"user":{"auto_increment":"id","references":{"group":"groups"},"1":{"group":"2","name":"Hans","nachname":"","email":""},"2":{"group":"1","name":"Thomas","nachname":"","email":""}}}
