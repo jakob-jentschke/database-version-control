@@ -88,7 +88,7 @@ function loadStructure($package, $connection) {
         
         saveTableDefinition($connection, $configDB['prefix'], $table);
 
-        echo "<div class=\"msgOK\">Paket '".$package."': Struktur der Tabelle '".$tableName."' geladen</div>";
+        echo "<div class=\"msgOK\">Paket '".$package."': Struktur der Tabelle '".$table['name']."' geladen</div>";
     }
     echo "<div class=\"msgOK\">Paket '".$package."': Struktur wurde geladen</div><br/>";
 }
@@ -286,9 +286,9 @@ function loadData($package, $connection) {
         
         
         $idLocal = array();
-        $stmt = $connection->prepare("SELECT `".$tableName."`.`".$table['auto_increment']."` AS `local`, `".$configDB['prefix']."vcs_data_ids`.`id_global` AS `global`
+        $stmt = $connection->prepare("SELECT `".$configDB['prefix'].$tableName."`.`".$table['auto_increment']."` AS `local`, `".$configDB['prefix']."vcs_data_ids`.`id_global` AS `global`
                 FROM `".$configDB['prefix']."vcs_data_ids`
-                LEFT JOIN `".$tableName."` ON `".$configDB['prefix']."vcs_data_ids`.`id_local` = `".$tableName."`.`".$table['auto_increment']."`
+                LEFT JOIN `".$configDB['prefix'].$tableName."` ON `".$configDB['prefix']."vcs_data_ids`.`id_local` = `".$configDB['prefix'].$tableName."`.`".$table['auto_increment']."`
                 WHERE `".$configDB['prefix']."vcs_data_ids`.`package` = ? AND `".$configDB['prefix']."vcs_data_ids`.`table` = ?");
         $stmt->execute(array($package, $tableName));
         
@@ -298,7 +298,6 @@ function loadData($package, $connection) {
             if($row['local'] === NULL) $stmtDelete->execute(array($package, $tableName, $row['global']));
             else $idLocal[$row['global']] = $row['local'];
         }
-
         $stmtInsert = $connection->prepare("INSERT INTO ".$configDB['prefix']."vcs_data_ids(`package`, `table`, `id_global`, `id_local`)
             VALUES(?, ?, ?, ?)");
 
@@ -336,24 +335,24 @@ function loadData($package, $connection) {
             
             if(isset($table['auto_increment'])) {
                 if(isset($idLocal[$idGlobal])) {
-                    $stmt2 = $connection->prepare("UPDATE `".$tableName."` SET ".implode(',', $setData)." WHERE `".$table['auto_increment']."` = ?");
+                    $stmt2 = $connection->prepare("UPDATE `".$configDB['prefix'].$tableName."` SET ".implode(',', $setData)." WHERE `".$table['auto_increment']."` = ?");
                     $stmt2->execute(array($idLocal[$idGlobal]));
                     unset($idLocal[$idGlobal]);
                 }
                 else {
-                    $stmt2 = $connection->prepare("INSERT INTO `".$tableName."` SET ".implode(',', $setData));
+                    $stmt2 = $connection->prepare("INSERT INTO `".$configDB['prefix'].$tableName."` SET ".implode(',', $setData));
                     $stmt2->execute();
                     $stmtInsert->execute(array($package, $tableName, $idGlobal, $connection->lastInsertId()));
                 }
             }
             else {
-                $stmt2 = $connection->prepare("INSERT INTO `".$tableName."` SET ".implode(',', $setData));
+                $stmt2 = $connection->prepare("INSERT INTO `".$configDB['prefix'].$tableName."` SET ".implode(',', $setData));
                 $stmt2->execute();
             }
         }
 
         if(isset($table['auto_increment'])) {
-            $stmtDelete = $connection->prepare("DELETE FROM `".$tableName."` WHERE `".$table['auto_increment']."` = ?");
+            $stmtDelete = $connection->prepare("DELETE FROM `".$configDB['prefix'].$tableName."` WHERE `".$table['auto_increment']."` = ?");
             $stmtDelete2 = $connection->prepare("DELETE FROM `".$configDB['prefix']."vcs_data_ids` WHERE `package` = ? AND `table` = ? AND `id_global` = ? AND `id_local` = ?");
 
             foreach($idLocal as $global => $local) {
@@ -373,7 +372,7 @@ function loadData($package, $connection) {
         }
         else $condition = "";
 
-        $stmt = $connection->prepare("DELETE FROM ".$tableName." WHERE `".$table['auto_increment']."` NOT IN (
+        $stmt = $connection->prepare("DELETE FROM ".$configDB['prefix'].$tableName." WHERE `".$table['auto_increment']."` NOT IN (
                 SELECT `id_local` FROM `".$configDB['prefix']."vcs_data_ids` WHERE `package` = ? AND `table` = ?) ".
                 $condition);
         $stmt->execute(array($package, $tableName));

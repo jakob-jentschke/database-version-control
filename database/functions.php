@@ -25,7 +25,7 @@ function getTableDefinition($createStatement, $prefix) {
         else $table['keys'][] = trim($column[0]);
     }
     
-    $table['options'] = $match[3];
+    $table['options'] = preg_replace('/AUTO_INCREMENT\s*=\s*\d*/i', '', $match[3]);
     
     return $table;
 }
@@ -117,6 +117,7 @@ function saveTableDefinition(PDO $connection, $prefix, $tableDefinition) {
         $query = "CREATE TABLE `".$prefix.$tableDefinition['name']."` (".
                 implode(',', array_merge($tableDefinition['columns'], $tableDefinition['keys'])).
                 ") ".$tableDefinition['options'];
+
         $stmt = $connection->prepare($query);
         $stmt->execute();
     }
