@@ -202,7 +202,7 @@ function saveData($package, $connection) {
         }
         
         if(isset($table->query)) $stmt = $connection->prepare((string) $table->query);
-        else $stmt = $connection->prepare("SELECT * FROM ".$tableName.$condition);
+        else $stmt = $connection->prepare("SELECT * FROM ".$configDB['prefix'].$tableName.$condition);
         $stmt->execute();
         
         $stmtInsert = $connection->prepare("INSERT INTO ".$configDB['prefix']."vcs_data_ids(`package`, `table`, `id_global`, `id_local`)

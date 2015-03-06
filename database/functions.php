@@ -19,9 +19,10 @@ function getTableDefinition($createStatement, $prefix) {
     $table['columns'] = array();
     $table['keys'] = array();
     
-    foreach(explode(',', $match[2]) as $column) {
-        if(preg_match('/^\s*`(.*?)`\s*(.*)\s*$/is', $column))  $table['columns'][] = trim($column);
-        else $table['keys'][] = trim($column);
+    preg_match_all("/(?:\([^\)]*\)|'[^']*'|\"[^\"]*\"|[^,])+/", $match[2], $columns, PREG_SET_ORDER);
+    foreach($columns as $column) {
+        if(preg_match('/^\s*`(.*?)`\s*(.*)\s*$/is', $column[0]))  $table['columns'][] = trim($column[0]);
+        else $table['keys'][] = trim($column[0]);
     }
     
     $table['options'] = $match[3];

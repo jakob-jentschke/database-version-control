@@ -1,5 +1,3 @@
 <package>
-    <table name="mai_vcs_column_ids" no_data="true"/>
-    <table name="mai_vcs_data_ids" no_data="true"/>
-    <table name="mai_vcs_config" no_data="true"/>
+    <table name="vcs_data_ids" no_data="true"/>
 </package>

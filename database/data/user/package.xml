@@ -1,3 +1,6 @@
 <package>
-  <table name="user" auto_increment="id"/>
+  <table name="groups" auto_increment="id"/>
+  <table name="user" auto_increment="id">
+    <reference table="groups">group</reference>
+  </table>
 </package>
